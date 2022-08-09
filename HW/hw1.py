@@ -2,6 +2,11 @@
 # Author: Peter Bachman
 # Date: 08/??/2022
 
+# TODO Finish print function
+# TODO Format print function correctly
+# TODO Finish history function
+# TODO Comment out script
+
 # Import a few modules
 import random
 
@@ -9,12 +14,15 @@ import random
 # Portfolio class
 class Portfolio:
     def __init__(self):
-        self.history = {}
+        self.transactions = {}
+        self.historyLine = 1
         self.portfolio = {"Cash": 0}
 
     # Print what is in the portfolio
+    # NOT FINISHED
     def __str__(self):
-        print("cash: $" + self.portfolio["Cash"])
+        report = "cash: $" + str(self.portfolio["Cash"])
+        return report
 
     # Add Cash Function
     def addCash(self, cash):
@@ -42,23 +50,24 @@ class Portfolio:
             print("Cannot buy negative amount of shares.")
         else:
             self.portfolio["Cash"] -= amt
-            self.portfolio[mtf.name] = [amt, "Mutual Fund"]
-            self.history(mtf.name, "Mutual Fund", "Buy", amt, 1)
+            self.portfolio[mtf.name] = [amt, "Mutual Fund", mtf.sellPrice]
+            self.transaction(mtf.name, "Mutual Fund", "Buy", amt, 1)
 
     # Sell Mutual Fund Function
-    def sellMutualFund(self, amt, mtf):
-        if self.portfolio[mtf.name][0] < amt:
+    def sellMutualFund(self, mtf, amt):
+        if self.portfolio[mtf][0] < amt:
             print("Cannot sell more shares than you have")
         else:
-            self.portfolio["Cash"] += amt * mtf.sellPrice
-            self.portfolio[mtf.name][0] -= amt
-            self.history(mtf.name, "Mutual Fund", "Sell", amt, mtf.sellPrice)
+            self.portfolio["Cash"] += amt * self.portfolio[mtf][2]
+            self.portfolio[mtf][0] -= amt
+            self.transaction(mtf, "Mutual Fund", "Sell", amt,
+                             self.portfolio[mtf][2])
             # Remove value from dictionary if all shares are sold
-            if self.portfolio[mtf.name][0] == 0:
-                self.portfolio.pop(mtf.name)
+            if self.portfolio[mtf][0] == 0:
+                self.portfolio.pop(mtf)
 
     # Buy Stock Function
-    def buyStock(self, stock, amt):
+    def buyStock(self, amt, stock):
         if amt * stock.buyPrice > self.portfolio["Cash"]:
             print("Cannot buy more shares than you can afford.")
         elif amt < 0:
@@ -67,29 +76,36 @@ class Portfolio:
             print("Stock amount must be an integer.")
         else:
             self.portfolio["Cash"] -= amt
-            self.portfolio[stock.name] = [amt, "Stock"]
-            self.history(stock.name, "Stock", "Buy", amt, stock.buyPrice)
+            self.portfolio[stock.name] = [amt, "Stock", stock.sellPrice]
+            self.transaction(stock.name, "Stock", "Buy", amt, stock.buyPrice)
 
     # Sell Stock Function
     def sellStock(self, stock, amt):
-        if self.portfolio[stock.name][0] < amt:
+        if self.portfolio[stock][0] < amt:
             print("Cannot sell more shares than you have")
         else:
-            self.portfolio["Cash"] += amt * stock.sellPrice
-            self.portfolio[stock.name][0] -= amt
-            self.history(stock.name, "Stock", "Sell", amt, stock.sellPrice)
+            self.portfolio["Cash"] += amt * self.portfolio[stock][2]
+            self.portfolio[stock][0] -= amt
+            self.transaction(stock, "Stock", "Sell", amt,
+                             self.portfolio[stock][2])
             # Remove value from dictionary if all shares are sold
-            if self.portfolio[stock.name][0] == 0:
-                self.portfolio.pop(stock.name)
+            if self.portfolio[stock][0] == 0:
+                self.portfolio.pop(stock)
+
+    # Transaction Function: Tracks the transactions made
+    def transaction(self, name, fund, type, amt, price):
+        historyLine = str(len(self.transactions) + 1)
+        self.transactions[historyLine] = {"Name": name,
+                                          "Fund Type": fund,
+                                          "Transaction Type": type,
+                                          "Amount": amt,
+                                          "Price Per Share": price,
+                                          "Total Price": price * amt}
 
     # History Function
-    def history(self, name, fund, transaction, amt, price):
-        self.history[len(self.history)] = {"Name": name,
-                                           "Fund Type": fund,
-                                           "Transaction Type": transaction,
-                                           "Amount": amt,
-                                           "Price Per Share": price,
-                                           "Total Price": price * amt}
+    # NOT FINISHED
+    def history(self):
+        print(self.transactions)
 
 
 # Mutual Fund Class
@@ -105,6 +121,7 @@ class Stock:
         self.name = symbol
         self.buyPrice = price
         self.sellPrice = price * random.uniform(0.5, 1.5)
+
 
 # TEST CLASSES
 portfolio = Portfolio()
