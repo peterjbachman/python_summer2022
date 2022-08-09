@@ -22,7 +22,7 @@
 
 
 # A silly function that prints an integer
-def print_int(int): 
+def print_int(int):
     int = 5
     print('Here is an integer: %s' % int)
 
@@ -50,7 +50,7 @@ int(5) # What is going to happen?
 # This will get very confusing and break things.
 
 # Let's try a new function for the product of random uniform draws
-def random_product(lower, upper): 
+def random_product(lower, upper):
     random1
     random2
     return random1 * random2
