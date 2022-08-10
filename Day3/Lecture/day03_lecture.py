@@ -7,31 +7,30 @@
 #                     David Carlson, and Betul Demirkaya
 # First Instructor: Matt Dickenson
 
-#---------- 3 Types of Errors ----------#
+# ---------- 3 Types of Errors ---------- #
 
 
 # 1- Syntax error
 #   - Errors related to language structure.
-#   - Forgotten symbols, types, or confusing object names. 
+#   - Forgotten symbols, types, or confusing object names.
 #   - Check the ˆ!
-# A syntax error happens when Python can’t understand the command. 
+# A syntax error happens when Python can’t understand the command.
 
 # Example:
-while True print 'Hello world'
-# In [1]: while True print 'Hello world'                                          
+# while True print 'Hello world'
+# In [1]: while True print 'Hello world'
 #   File "<ipython-input-1-87563a47f7ef>", line 1
 #     while True print 'Hello world'
 #                    ^
 # SyntaxError: invalid syntax
 
-while True: print('Hello world')
-
-
+# while True:
+#     print('Hello world')
 
 # 2 - Runtime error
 #   - Errors during the execution of program.
 #   - e.g., TypeError, NameError, ZeroDivisionError
-# A run-time error happens when Python understands and runs the command, 
+# A run-time error happens when Python understands and runs the command,
 # but cannot follow the instructions.
 
 
@@ -44,7 +43,6 @@ print(callme)
 #
 # NameError: name 'callme' is not defined
 print(callMe)
-
 # Example 2 (TypeError):
 print("you cannot add text and numbers" + 12)
 # TypeError                                 Traceback (most recent call last)
@@ -59,18 +57,23 @@ print("you cannot add text and numbers" + '12')
 # Example:
 def avg(x, y):
     return x + y / 2
-myAvg = avg(2, 2) 
-print(myAvg)
 
-def avg(x, y):
-    return (x + y) / 2
+
 myAvg = avg(2, 2)
 print(myAvg)
 
-# Very common, very annoying and, unfortunately, without indication that they exist.
+
+def avg(x, y):
+    return (x + y) / 2
 
 
-#---------- Debugging Tips ----------#
+myAvg = avg(2, 2)
+print(myAvg)
+
+# Very common, very annoying and, unfortunately, without indication that
+# they exist.
+
+# ---------- Debugging Tips ---------- #
 
 # 1 - Do not use reserved/keywords:
 # - You can check the reserved/keywords using:
@@ -78,6 +81,8 @@ import keyword
 keyword.kwlist
 # 2 - A colon is included after for, while, if, else, def, class, etc.
 def avg(x, y): return (x + y)/2
+
+
 avg(2, 2)
 # 3 - Parentheses and quotations are closed properly.
 print((10*2) + (5*3))
@@ -93,39 +98,43 @@ while x < 5:
 for i in range(0, 5):
     print(i)
 
-#---------- Exceptions ----------#
+# ---------- Exceptions ---------- #
 
 # We use them when we expect error to occur, very useful when web scraping
 # We define what to execute when there is an error
 # We should deal with multiple errors separately
 
 # List of exceptions:
-#  - raise: 
+#  - raise:
 #       to create exceptions or errors
-#  - pass 
+#  - pass
 #       to continue execution without doing anything
-#  - try: 
+#  - try:
 #       tries executing the following
-#  - except TypeError: 
+#  - except TypeError:
 #       runs if a Type Error was raised
-#  - except: 
+#  - except:
 #       runs for all types of errors or exceptions; be careful
-#  - else:  
+#  - else:
 #       runs if there was no exception/error
-#  - finally: 
+#  - finally:
 #       always runs
 
 # We can create our own exceptions using classes.
 
 # Example 1, using raise Exception:
 
+
 def exception_func(x):
     if x == 0:
-        raise Exception("Cannot divide by 0") 
+        raise Exception("Cannot divide by 0")
     else:
         return 5.0//x
+
+
 print(exception_func(1))
 print(exception_func(0))
+
 
 # Example 2, using built-in exceptions (ZeroDivisionError)
 def exception_func(x):
@@ -134,7 +143,9 @@ def exception_func(x):
     except ZeroDivisionError:
         ans = "Cannot divide by 0"
     finally:
-        return ans 
+        return ans
+
+
 print(exception_func(1))
 print(exception_func(0))
 
@@ -143,12 +154,13 @@ print(exception_func(0))
 
 # Example 3, try and exception
 try:
-    "hi" // 12 ## type error
-    5//0 ## zero division error
-    print(var//12) ## name error
+    "hi" // 12  # type error
+    5//0  # zero division error
+    print(var // 12)  # name error
 except:
     print("caught an exception")
 # We use this format when we don't know what is causing the issue.
+
 
 # Example 4, a more complex example
 def divide_two_things(thing1, thing2):
@@ -166,28 +178,31 @@ def divide_two_things(thing1, thing2):
     finally:
         return out
 
+
 divide_two_things("hi", 12)
 divide_two_things(12, 0)
-divide_two_things([1,1],0)
+divide_two_things([1, 1], 0)
 divide_two_things(5, 5)
 
-## Doesn't catch semantic errors, though!
-## If you had meant to divide 10/3 rather than 10//3
-divide_two_things(10, 3) 
+# Doesn't catch semantic errors, though!
+# If you had meant to divide 10/3 rather than 10//3
+divide_two_things(10, 3)
 
 # Exceptions are helpful so our code doesn't break!
 # Example 5:
-list1 = [15, 9, 8] 
+list1 = [15, 9, 8]
 list2 = [1, 1, 0]
 # zip() creates an iterator of tuples based on iterable objects (such as lists)
-print(["i value = {} and j value {}".format(i, j) for i, j in zip(list1, list2)])
+print(["i value = {} and j value {}".format(i, j)
+       for i, j in zip(list1, list2)])
 # We can loop over the two lists using divide_two_things()
-newlist = [divide_two_things(i,j) for i, j in zip(list1, list2)]
+newlist = [divide_two_things(i, j) for i, j in zip(list1, list2)]
 newlist
+
 
 # Short Class Activity
 # Let's say we don't care about floats... rounding down is cool.
-# What type of error would occur? 
+# What type of error would occur?
 # How can we fix it?
 def print_integer(integer):
     try:
@@ -197,54 +212,59 @@ def print_integer(integer):
         pass
     except ZeroDivisionError:
         pass
-    
+
+
 print_integer(2)
 print_integer('22')
 print_integer(0)
 
+
 # We can nest if and else within try and exception
 def print_integer(integer):
     try:
-        ## if a whole number
+        # if a whole number
         if integer % 1 == 0:
             return "Here is my integer: " + str(integer)
         else:
             return "This number has decimals!"
 
-    except: # generic exception must be last
+    except:  # generic exception must be last
         raise TypeError("Enter a number!")
+
 
 print_integer('22')
 print_integer(1.2)
 print_integer(1)
 
 
-# We can create your own exception      
-class CustomException(Exception): 
-  def __init__(self, value):
-    self.value = value
-  def __str__(self):
-    return str(self.value)
+# We can create your own exception
+class CustomException(Exception):
+    def __init__(self, value):
+        self.value = value
+
+    def __str__(self):
+        return str(self.value)
+
 
 # use
-raise CustomException(3)
+# raise CustomException(3)
 
 # Our custom exception is the integer cannot be 10, 20, or 30.
-# Since this is a ValueError unique to our situation, 
+# Since this is a ValueError unique to our situation,
 # we need to catch it ourselves.
 def print_integer(integer):
     bad_numbers = [10, 20, 30]
     try:
         if integer in bad_numbers:
-            ## raise it ourselves
+            # raise it ourselves
             raise CustomException(integer)
         elif integer % 1 != 0:
-            raise CustomException(integer) 
+            raise CustomException(integer)
         else:
             print("Congratulations! You entered an integer!")
-    ## then catch it
+    # then catch it
     except CustomException as e:
-        ## and print our message
+        # and print our message
         raise ValueError("Your number cannot be: %f" % e.value)
         return None
     except TypeError:
@@ -252,28 +272,31 @@ def print_integer(integer):
         return None
     else:
         return integer
-print_integer(10) 
-print_integer(1.2) 
+
+
+print_integer(10)
+print_integer(1.2)
 print_integer('a')
 print_integer(1)
 
-# more on except and raise: https://stackoverflow.com/questions/56942284/what-is-the-difference-between-raise-and-except
+# more on except and raise:
+# https://stackoverflow.com/questions/56942284/what-is-the-difference-between-raise-and-except
 
 
-#---------- break, continue, and else ----------#
+# ---------- break, continue, and else ---------- #
 
 # These statements can be handy using while or for loops.
-# - break 
+# - break
 #   stops the loop
-# - continue 
+# - continue
 #   moves on to the next iteration
-# - else 
+# - else
 #   executed only if all iterations are completed
 
 for n in range(2, 10):
-    #print(n)
+    # print(n)
     for x in range(2, 5):
-        #print(x)
+        # print(x)
         if 5 % x == 0:
             print(5, 'equals', x, '*', 5//x)
             break
@@ -281,26 +304,26 @@ for n in range(2, 10):
         print(5, 'is a prime number')
 
 # We want to only print "n is a prime number" once
-# We want to avoid repetition if 2x3 = 6, 
+# We want to avoid repetition if 2x3 = 6,
 # we don't need to print 3x2 = 6
 # How we solve it?
 
 
 # Solution:
 for n in range(2, 10):
-    for x in range(2, n): 
+    for x in range(2, n):
         if n % x == 0:
             print(n, 'equals', x, '*', n//x)
             break
     else:
         print(n, 'is a prime number')
 
-# See lecture 1 for more on pass, break, and continue 
+# See lecture 1 for more on pass, break, and continue
 
-#---------- Unit Test ----------#
+# ---------- Unit Test ---------- #
 
 # Write tests before / alongside your code
-# Tests the smallest possible unit of your code 
+# Tests the smallest possible unit of your code
 # Forces code structure
 # Allows easier integration of multiple functions
 # Much easier to return to code:
@@ -310,7 +333,7 @@ for n in range(2, 10):
 # Test-driven development
 
 # We can use assert to test our code within our script
-assert sum([1, 2, 3]) == 6 # It will not return anything if it is correct
+assert sum([1, 2, 3]) == 6  # It will not return anything if it is correct
 assert sum([2, 3]) == 6
 assert avg(2, 2) == 2
 assert avg(2, 2) == 4
@@ -322,30 +345,33 @@ assert avg(2, 2) == 4
 
 import unittest
 
+
 class TestStringMethods(unittest.TestCase):
-    
-    def test_upper(self): 
+
+    def test_upper(self):
         self.assertEqual('foo'.upper(), 'FOO')
-    
+
     def test_isupper(self):
         self.assertTrue('FoO'.isupper())
         self.assertFalse('Foo'.isupper())
-    
+
     def test_split(self):
         s = 'hello world'
         self.assertEqual(s.split(), ['hello', 'world'])
-        # check that s.split fails when the separator is not a string 
+        # check that s.split fails when the separator is not a string
         # We need the keyword "with" when using self.assertRaises():
-        # "with" is a keyword to use a context manager 
+        # "with" is a keyword to use a context manager
         # See: https://www.geeksforgeeks.org/context-manager-in-python/
         with self.assertRaises(TypeError):
             s.split(2)
+
+
 # if you want to run the test with this script
-if __name__ == '__main__': 
+if __name__ == '__main__':
     unittest.main()
 # what's wrong here?
 
-# Functions to test 
+# Functions to test
 # Method                      Checks that
 # assertEqual(a, b)           a == b
 # assertNotEqual(a, b)        a != b
@@ -366,17 +392,17 @@ if __name__ == '__main__':
 # Copyright of the original version:
 
 # Copyright (c) 2014 Matt Dickenson
-# 
+
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-# 
+
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE

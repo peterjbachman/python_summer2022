@@ -5,7 +5,9 @@
 # TODO Finish print function
 # TODO Format print function correctly
 # TODO Finish history function
-# TODO Comment out script
+# TODO Create Comments for functions
+# TODO Sell Price is changed every time, not set to the class
+# TODO Create proper errors?
 
 # Import a few modules
 import random
@@ -24,15 +26,25 @@ class Portfolio:
         report = "cash: $" + str(self.portfolio["Cash"])
         return report
 
-    # Add Cash Function
     def addCash(self, cash):
+        """Add cash to the Portfolio class
+
+        Args:
+            cash (float): Non-negative number
+        """
+
         if cash < 0:
             print("Cannot add a negative amount of cash")
         else:
             self.portfolio["Cash"] += cash
 
-    # Withdraw Cash Function
     def withdrawCash(self, cash):
+        """Remove cash from the Portfolio class
+
+        Args:
+            cash (float): Non-negative number
+        """
+
         # Cannot withdraw more cash than the accout has, and also cannot
         # withdraw a negative amount of cash
         if cash > self.portfolio["Cash"]:
@@ -42,8 +54,14 @@ class Portfolio:
         else:
             self.portfolio["Cash"] -= cash
 
-    # Buy Mutual Fund Function
     def buyMutualFund(self, amt, mtf):
+        """Purchase shares of a Mutual Fund
+
+        Args:
+            amt (float): Non-negative number
+            mtf (Class): Mutual Fund Class
+        """
+
         if amt > self.portfolio["Cash"]:
             print("Cannot buy more shares than you can afford.")
         elif amt < 0:
