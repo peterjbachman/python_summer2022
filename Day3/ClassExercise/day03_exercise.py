@@ -34,5 +34,5 @@ class TestVowels(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    # ipython throws anerror otherwise
+    # ipython throws an error otherwise
     unittest.main(__name__, argv=['main'], exit=False)
