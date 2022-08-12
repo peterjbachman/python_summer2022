@@ -249,10 +249,14 @@ from selenium.webdriver.common.keys import Keys
 # pip3 install selenium
 # download appropriate web driver from browser, e.g. https://chromedriver.chromium.org/
 
+# Mac:
+# For Chrome: brew install chromedriver
+# For Firefox: brew install geckodriver
+
 # Interactive example:
 
-driver_path = '/Users/miame/Documents/GitHub/python_summer2022/Day4/Lecture/chromedriver'
-driver = webdriver.Chrome(driver_path)
+# driver_path = '/usr/local/bin/chromedriver'
+driver = webdriver.Firefox()
 
 # start the web drivers
 driver.get('https://www.google.com')
@@ -287,7 +291,7 @@ email = []
 for i in range(0, 2):
   print(i)
   page.append(url + mps[i]['href'])
-  driver = webdriver.Chrome(executable_path = driver_path)
+  driver = webdriver.Firefox()
   driver.get(page[i])
   html = driver.page_source
   driver.close()
