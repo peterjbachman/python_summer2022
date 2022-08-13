@@ -25,3 +25,27 @@ import time
 
 # https://www.presidency.ucsb.edu/documents/app-categories/presidential/spoken-addresses-and-remarks
 # https://www.presidency.ucsb.edu/documents/app-categories/presidential/spoken-addresses-and-remarks?page=1
+
+with open('bidenAddress.csv', 'w') as f:
+    w = csv.DictWriter(f, fieldnames=("date",
+                                      'title',
+                                      'text',
+                                      'citation'))
+    w.writeheader()
+
+    i = 0
+    biden = True
+    baseLink = 'https://www.presidency.ucsb.edu/documents/app-categories/presidential/spoken-addresses-and-remarks'
+    # Append the link with the page number
+    while biden:
+        if i == 0:
+            page = baseLink
+        else:
+            page = baseLink + "?page=" + str(i)
+        page = urllib.request.urlopen(page)
+        soup = BeautifulSoup(page.read())
+
+        # For loop for each individual page
+
+        i += 1
+        time.sleep(uniform(2, 5))
