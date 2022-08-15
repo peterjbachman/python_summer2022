@@ -1,6 +1,6 @@
-*/.DS_Store
-*/start_spotify.py
-*/start_twitter.py
-*/__pycache__/
-*/.cache
-*/start_google.py
+*.DS_Store
+*start_spotify.py
+*start_twitter.py
+*__pycache__/
+*.cache
+*start_google.py
