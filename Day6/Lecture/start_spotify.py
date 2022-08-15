@@ -7,6 +7,6 @@
 #   e.g. http://localhost:80, click "Add" and then click "Save"
 # Copy/paste to fill in below:
 
-client_id='YOUR CLIENT ID'
-client_secret='YOUR CLIENT SECRET'
-redirect_url='YOUR REDIRECT URL'
+client_id = 'a7cfbc0cce304e82aa22a715da0fbfe9'
+client_secret = '9e4614f7bdeb45939c1efaaca4f723b2'
+redirect_url = 'http://127.0.0.1:9090'
