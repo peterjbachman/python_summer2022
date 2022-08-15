@@ -27,10 +27,7 @@ import time
 # https://www.presidency.ucsb.edu/documents/app-categories/presidential/spoken-addresses-and-remarks?page=1
 
 with open('bidenAddress.csv', 'w') as f:
-    w = csv.DictWriter(f, fieldnames=("date",
-                                      'title',
-                                      'text',
-                                      'citation'))
+    w = csv.DictWriter(f, fieldnames=("date", 'title', 'text', 'citation'))
     w.writeheader()
 
     i = 0

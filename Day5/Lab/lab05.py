@@ -12,7 +12,8 @@ print(obama)
 obama = ''.join(obama)
 re.findall(r"^(?!.*\bthe\b).*", obama, re.MULTILINE)
 
-# TODO: print lines that contain a word of any length starting with s and ending with e
+# TODO: print lines that contain a word of any length starting with s and
+#       ending with e
 re.findall(r"^.*\ss\w*e\s.*", obama, re.MULTILINE)
 
 # TODO: Print the date input in the following format

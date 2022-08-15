@@ -8,8 +8,14 @@
 # First Instructor: Matt Dickenson
 
 # Set Directory
+from nltk.corpus import movie_reviews
+import random
+from nltk.corpus import names
+import nltk
+import re  # for regular expressions
 import os
-os.chdir('/Users/peter/Code/python_summer2022/Day5/Lecture')
+
+os.chdir("/Users/peter/Code/python_summer2022/Day5/Lecture")
 
 
 # ---------- Regular Expressions ---------- #
@@ -20,7 +26,6 @@ os.chdir('/Users/peter/Code/python_summer2022/Day5/Lecture')
 # (but unicode can also be used)
 # In Python, mainly through library re.
 
-import re  # for regular expressions
 
 # Load example text -- in this case Obama's 2008 concession speech from
 # New Hampshire primary
@@ -39,7 +44,7 @@ print(text[2])
 
 # Join into one string
 # What could we have done at the outset instead?
-alltext = ''.join(text)
+alltext = "".join(text)
 
 # OR
 with open("obama-nh.txt", "r") as f:
@@ -126,7 +131,7 @@ re.findall(r"\d{1,3}", alltext)
 # Short Exercise: How would we grab 10/10 as it appears in text?
 x = "Hi 10/10 hello 9/18 asdf 9/9"
 
-re.findall(r'\d{2}/\d{2}', x)
+re.findall(r"\d{2}/\d{2}", x)
 
 # Answer
 re.findall(r"\d{2}/\d{2}", x)
@@ -153,14 +158,14 @@ re.findall(r"([A-Z]+\w*)", alltext)
 # ---------- re.split() ---------- #
 
 # splits at digits, deletes digits
-re.split(r'\d', alltext)
+re.split(r"\d", alltext)
 
 # splits at non-digits, deletes char
-re.split(r'\D', alltext)
+re.split(r"\D", alltext)
 
 # What is this doing?
-re.split(r'\.', alltext)  # remove separator
-re.split(r'(\.)', alltext)  # using () we split and keep separator
+re.split(r"\.", alltext)  # remove separator
+re.split(r"(\.)", alltext)  # using () we split and keep separator
 
 # ---------- re.compile() ---------- #
 
@@ -176,27 +181,27 @@ for i, line in enumerate(text):
 # enumerate() allows us to loop over something and have an automatic counter
 
 # Create a regex object
-pattern = re.compile(r'\d')
+pattern = re.compile(r"\d")
 pattern.findall(alltext)
 pattern.split(alltext)
 
 # Can also search across lines in single strings with re.MULTILINE
-mline = 'bin\nban\ncan'
+mline = "bin\nban\ncan"
 print(mline)
 
 # ^ check the start of the string (FYI, $ checks end of string)
 # looking for b
-pattern = re.compile(r'^b\w*')  # "^" words starting in b
+pattern = re.compile(r"^b\w*")  # "^" words starting in b
 pattern.findall(mline)
 
 # looking for b in multilines
-pattern = re.compile(r'^b\w*', re.MULTILINE)
+pattern = re.compile(r"^b\w*", re.MULTILINE)
 pattern.findall(mline)
 
 # Now, back to the speech as a single string...
 # Explain the difference between these two lines
-re.findall(r'^b\w*', alltext, re.MULTILINE)
-re.findall(r'^b\w*', alltext)
+re.findall(r"^b\w*", alltext, re.MULTILINE)
+re.findall(r"^b\w*", alltext)
 
 # re.MULTILINE treats each line as its own string
 # for the sake of the pattern
@@ -205,10 +210,7 @@ re.findall(r'^b\w*', alltext)
 # Short Exercise
 # Check if a line ends in a period
 # How is this working?
-re.findall(r'^.*\.$', alltext, re.MULTILINE)
-
-
-
+re.findall(r"^.*\.$", alltext, re.MULTILINE)
 
 
 # '^.' = starts with any char
@@ -218,10 +220,10 @@ re.findall(r'^.*\.$', alltext, re.MULTILINE)
 
 
 # ---------- search, match, and groups ---------- #
-t = '12 twelve'
+t = "12 twelve"
 
 # find a number and a word separated by a whitespace
-pattern = re.compile(r'(\d*)\s(\w*)')
+pattern = re.compile(r"(\d*)\s(\w*)")
 # create an instance
 tsearch = pattern.search(t)
 print(tsearch)
@@ -237,14 +239,14 @@ tsearch.group(2)
 # Similar to using () alone, but the text
 # matched by the group is then accessible
 # (?P<Y>...)  Capturing group named Y
-pattern = re.compile(r'(?P<number>\d*)\s(?P<name>\w*)')
+pattern = re.compile(r"(?P<number>\d*)\s(?P<name>\w*)")
 tsearch = pattern.search(t)
 tsearch.groups()
 tsearch.groupdict()
 
 # Another example
-mytext = '12 24'
-pattern = re.compile(r'(\d*)\s(\d*)')
+mytext = "12 24"
+pattern = re.compile(r"(\d*)\s(\d*)")
 pattern.search(mytext).groups()
 pattern.search(mytext).group(0)
 pattern.search(mytext).group(1)
@@ -263,14 +265,13 @@ pattern.search(r"a12 24").groups()  # works
 # https://www.nltk.org/api/nltk.classify.naivebayes.html
 
 # pip install nltk
-import nltk
-nltk.download('names')
-from nltk.corpus import names
-import random
+
+nltk.download("names")
 
 # Create a list of tuples with names
-names = ([(name, 'male') for name in names.words('male.txt')] +
-         [(name, 'female') for name in names.words('female.txt')])
+names = [(name, "male") for name in names.words("male.txt")] + [
+    (name, "female") for name in names.words("female.txt")
+]
 
 # Now, we shuffle
 random.shuffle(names)
@@ -288,7 +289,7 @@ test_names = names[train_size:]
 
 # A simple feature: Get the last letter of the name
 def g_features1(word):
-    return {'last_letter': word[-1]}
+    return {"last_letter": word[-1]}
 
 
 # Quick break — some syntax:
@@ -308,14 +309,14 @@ test_set = [(g_features1(n), g) for (n, g) in test_names]
 classifier = nltk.NaiveBayesClassifier.train(train_set)
 
 # Apply the classifier to some names
-classifier.classify(g_features1('Neo'))
-classifier.classify(g_features1('Trinity'))
-classifier.classify(g_features1('Max'))
-classifier.classify(g_features1('Lucy'))
+classifier.classify(g_features1("Neo"))
+classifier.classify(g_features1("Trinity"))
+classifier.classify(g_features1("Max"))
+classifier.classify(g_features1("Lucy"))
 
 # Get the probability of female:
-classifier.prob_classify(g_features1('Lucy')).prob("female")
-classifier.prob_classify(g_features1('Amanda')).prob("female")
+classifier.prob_classify(g_features1("Lucy")).prob("female")
+classifier.prob_classify(g_features1("Amanda")).prob("female")
 
 
 # Check the overall accuracy with test set
@@ -331,14 +332,14 @@ def g_features2(name):
     features = {}
     features["firstletter"] = name[0].lower()
     features["lastletter"] = name[-1].lower()
-    for letter in 'abcdefghijklmnopqrstuvwxyz':
+    for letter in "abcdefghijklmnopqrstuvwxyz":
         features["count(%s)" % letter] = name.lower().count(letter)
-        features["has(%s)" % letter] = (letter in name.lower())
+        features["has(%s)" % letter] = letter in name.lower()
     return features
 
 
 # Test function
-g_features2('Amanda')
+g_features2("Amanda")
 
 # Run for train set
 train_set = [(g_features2(n), g) for (n, g) in train_names]
@@ -368,10 +369,8 @@ for (name, label) in test_names:
 
 
 for (label, guess, prob, name) in sorted(errors):
-    print('correct={} guess={} prob={:.2f} name={}'.format(label,
-                                                           guess,
-                                                           prob,
-                                                           name))
+    print("correct={} guess={} prob={:.2f} name={}".format(
+        label, guess, prob, name))
 
 
 # What should we do here?
@@ -397,14 +396,16 @@ classifier.show_most_informative_features(5)
 
 
 # Now lets look at some bigger documents
-from nltk.corpus import movie_reviews
-nltk.download('movie_reviews')
+
+nltk.download("movie_reviews")
 
 # list of tuples
 # ([words], label)
-documents = [(list(movie_reviews.words(fileid)), category)
-             for category in movie_reviews.categories()
-             for fileid in movie_reviews.fileids(category)]
+documents = [
+    (list(movie_reviews.words(fileid)), category)
+    for category in movie_reviews.categories()
+    for fileid in movie_reviews.fileids(category)
+]
 documents[0]
 random.shuffle(documents)
 
@@ -415,7 +416,7 @@ len(all_words)
 word_features = [k for k in all_words.keys() if all_words[k] > 5]
 
 # Check the frequency of ','
-all_words[',']
+all_words[","]
 # Print frequency of all words
 for w in word_features:
     print(all_words[w])
@@ -426,11 +427,11 @@ def document_features(document):
     document_words = set(document)
     features = {}
     for word in word_features:
-        features['contains(%s)' % word] = (word in document_words)
+        features["contains(%s)" % word] = word in document_words
     return features
 
 
-print(document_features(movie_reviews.words('pos/cv957_8737.txt')))
+print(document_features(movie_reviews.words("pos/cv957_8737.txt")))
 
 # Now we have tuple of ({features}, label)
 train_docs = documents[:500]

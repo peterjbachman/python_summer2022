@@ -73,7 +73,7 @@ with open('profWUSTL.csv', 'w') as f:
                 professor["email"] = "NA"
             else:
                 professor["email"] = profSoup.find('ul',
-                                                  {'class': 'detail contact'}).find("a").text
+                                                   {'class': 'detail contact'}).find("a").text
 
         except AttributeError:
             professor["website"] = 'NA'

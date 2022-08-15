@@ -49,7 +49,7 @@ print("you cannot add text and numbers" + 12)
 # <ipython-input-6-134cd69869df> in <module>
 # ----> 1 print("you cannot add text and numbers" + 12)
 # TypeError: must be str, not int
-print("you cannot add text and numbers" + '12')
+print("you cannot add text and numbers" + "12")
 
 
 # 3 - Semantic error
@@ -78,14 +78,16 @@ print(myAvg)
 # 1 - Do not use reserved/keywords:
 # - You can check the reserved/keywords using:
 import keyword
+
 keyword.kwlist
 # 2 - A colon is included after for, while, if, else, def, class, etc.
-def avg(x, y): return (x + y)/2
+def avg(x, y):
+    return (x + y) / 2
 
 
 avg(2, 2)
 # 3 - Parentheses and quotations are closed properly.
-print((10*2) + (5*3))
+print((10 * 2) + (5 * 3))
 # 4 - Use = and == correctly
 myAvg = avg(2, 2)
 2 == myAvg
@@ -129,7 +131,7 @@ def exception_func(x):
     if x == 0:
         raise Exception("Cannot divide by 0")
     else:
-        return 5.0//x
+        return 5.0 // x
 
 
 print(exception_func(1))
@@ -139,7 +141,7 @@ print(exception_func(0))
 # Example 2, using built-in exceptions (ZeroDivisionError)
 def exception_func(x):
     try:
-        ans = 5.0//x
+        ans = 5.0 // x
     except ZeroDivisionError:
         ans = "Cannot divide by 0"
     finally:
@@ -155,7 +157,7 @@ print(exception_func(0))
 # Example 3, try and exception
 try:
     "hi" // 12  # type error
-    5//0  # zero division error
+    5 // 0  # zero division error
     print(var // 12)  # name error
 except:
     print("caught an exception")
@@ -193,8 +195,7 @@ divide_two_things(10, 3)
 list1 = [15, 9, 8]
 list2 = [1, 1, 0]
 # zip() creates an iterator of tuples based on iterable objects (such as lists)
-print(["i value = {} and j value {}".format(i, j)
-       for i, j in zip(list1, list2)])
+print(["i value = {} and j value {}".format(i, j) for i, j in zip(list1, list2)])
 # We can loop over the two lists using divide_two_things()
 newlist = [divide_two_things(i, j) for i, j in zip(list1, list2)]
 newlist
@@ -215,7 +216,7 @@ def print_integer(integer):
 
 
 print_integer(2)
-print_integer('22')
+print_integer("22")
 print_integer(0)
 
 
@@ -232,7 +233,7 @@ def print_integer(integer):
         raise TypeError("Enter a number!")
 
 
-print_integer('22')
+print_integer("22")
 print_integer(1.2)
 print_integer(1)
 
@@ -276,7 +277,7 @@ def print_integer(integer):
 
 print_integer(10)
 print_integer(1.2)
-print_integer('a')
+print_integer("a")
 print_integer(1)
 
 # more on except and raise:
@@ -298,10 +299,10 @@ for n in range(2, 10):
     for x in range(2, 5):
         # print(x)
         if 5 % x == 0:
-            print(5, 'equals', x, '*', 5//x)
+            print(5, "equals", x, "*", 5 // x)
             break
     else:
-        print(5, 'is a prime number')
+        print(5, "is a prime number")
 
 # We want to only print "n is a prime number" once
 # We want to avoid repetition if 2x3 = 6,
@@ -313,10 +314,10 @@ for n in range(2, 10):
 for n in range(2, 10):
     for x in range(2, n):
         if n % x == 0:
-            print(n, 'equals', x, '*', n//x)
+            print(n, "equals", x, "*", n // x)
             break
     else:
-        print(n, 'is a prime number')
+        print(n, "is a prime number")
 
 # See lecture 1 for more on pass, break, and continue
 
@@ -347,17 +348,16 @@ import unittest
 
 
 class TestStringMethods(unittest.TestCase):
-
     def test_upper(self):
-        self.assertEqual('foo'.upper(), 'FOO')
+        self.assertEqual("foo".upper(), "FOO")
 
     def test_isupper(self):
-        self.assertTrue('FOO'.isupper())
-        self.assertFalse('Foo'.isupper())
+        self.assertTrue("FOO".isupper())
+        self.assertFalse("Foo".isupper())
 
     def test_split(self):
-        s = 'hello world'
-        self.assertEqual(s.split(), ['hello', 'world'])
+        s = "hello world"
+        self.assertEqual(s.split(), ["hello", "world"])
         # check that s.split fails when the separator is not a string
         # We need the keyword "with" when using self.assertRaises():
         # "with" is a keyword to use a context manager
@@ -367,7 +367,7 @@ class TestStringMethods(unittest.TestCase):
 
 
 # if you want to run the test with this script
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
 # what's wrong here?
 
