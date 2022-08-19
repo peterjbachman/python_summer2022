@@ -100,7 +100,13 @@ Base = declarative_base()
 # - relationship() method then specified by parent (team) to reference many
 #   items
 
+<< << << < HEAD
 # Our Player table has 3 columns: ID, Name, and Number
+
+
+== == == =
+# Our Player table has 4 columns: ID, Name, Number, and Team ID
+>>>>>> > upstream/main
 
 
 class Player(Base):
