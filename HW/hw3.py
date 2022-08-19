@@ -10,7 +10,8 @@ os.chdir("/Users/peter/Code/python_summer2022/HW")
 
 # Set up API
 twitter = importlib.import_module("start_twitter")
-api = twitter.api
+# Doing it this way so the LSP will show avaliable functions.
+api = tweepy.API(twitter.auth)
 
 wustl = api.get_user(screen_name="@WUSTLPoliSci")
 wustlFollowers = api.get_follower_ids(screen_name="@WUSTLPoliSci")
