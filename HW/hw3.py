@@ -120,11 +120,102 @@ friends["celebrity"].statuses_count
 # 481564
 
 # FOLLOWERS OF FOLLOWERS ----------------------------------------------------
+most_active = 0
+
+for i in wustlFollowers:
+
+    # Try pulling the followers list for the follower of WUSTLPoliSci.
+    # If it doesn't work then skip the user
+    try:
+        followers_followers = api.get_follower_ids(
+            user_id=i, count=1000, cursor=-1)
+    except tweepy.TweepyException:
+        print("Skipping Twitter user due to some issue")
+        pass
+
+    # Count is set at 1000, so anything above this will have a cursor, meaning
+    # they are categorized as a celebrity
+    if followers_followers[1][1] == 0:
+
+        # Print status update
+        print("Going through follower %i" % wustlFollowers.index(i))
+
+        # Iterate through each of the followers followers.
+        for i in followers_followers[0]:
+            try:
+                user = api.get_user(user_id=i)
+            except tweepy.TweepyException:
+                print("Error getting this user, skipping")
+                pass
+
+            # Set first user to most active
+            if most_active == 0:
+                most_active = user
+                pass
+
+            # See if new user is the most active
+            if most_active.statuses_count < user.statuses_count:
+                most_active = user
+                print("New Most Active User: %s with %i tweets" %
+                      (user.screen_name, user.statuses_count))
+    else:
+        print("Follower is classified as a celebrity")
+
+# I tried running this for about 30 hours and it only got to follower 174 of
+# the 852 followers. Here's the results for this so far
+most_active.screen_name
+# Cooperativa
+most_active.statuses_count
+# 1353762 tweets
 
 # FRIENDS OF FRIENDS --------------------------------------------------------
+# This one wasn't run since time is finite
+most_active = 0
 
-# Testing pagination, since the second part of the homework will
-# probably need this
-test = api.get_follower_ids(screen_name="@JoeBiden", cursor=-1)
-len(test[0])
-api.get_user(user_id=wustlFollowers[0]).followers_count
+for i in wustlFriends:
+
+    try:
+        friend = api.get_follower_ids(user_id=i, count=1000, cursor=-1)
+    except tweepy.TweepyException:
+        print("Unable to process this friend, skipping.")
+        pass
+
+    # Filter for those who are layman or expert.
+    if friend[1][1] == 0:
+        print("On user %i" % (wustlFriends.index(i)+1))
+        friend_friends = api.get_friend_ids(user_id=i, cursor=-1, count=5000)
+
+        paged = True
+        while paged:
+            for j in friend_friends[0]:
+
+                # Setting the first person as the most_active to begin with
+                if most_active == 0:
+                    most_active = api.get_user(user_id=j)
+                    pass
+                try:
+                    user = api.get_user(user_id=j)
+                except tweepy.TweepyException:
+                    print("User cannot be accessed, skipping.")
+
+                # Compare activity rate and change if the new person is more
+                # active
+                if user.statuses_count > most_active.statuses_count:
+                    most_active = user
+                    print("New Most Active User: %s with %i tweets" %
+                          (user.screen_name, user.statuses_count))
+
+            # If this was the last page, end the loop
+            if friend_friends[1][1] == 0:
+                paged = False
+
+            # If not, load up the next page and continue
+            else:
+                try:
+                    friend_friends = api.get_friend_ids(
+                        user_id=i, cursor=friend_friends[1][1], count=5000)
+                except tweepy.TweepyException:
+                    print("Cannot get friends list for some reason, skipping.")
+                    pass
+    else:
+        print("This user is a celebrity, skipping.")
